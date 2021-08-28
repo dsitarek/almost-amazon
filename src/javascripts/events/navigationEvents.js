@@ -1,4 +1,8 @@
 import signOut from '../helpers/auth/signOut';
+import { showAuthors } from '../components/authors';
+import { getAuthors, getFavAuthors } from '../helpers/data/authorData';
+import { showBooks } from '../components/books';
+import { getBooks, booksOnSale } from '../helpers/data/bookData';
 
 // navigation events
 const navigationEvents = () => {
@@ -8,12 +12,15 @@ const navigationEvents = () => {
 
   // BOOKS ON SALE
   document.querySelector('#sale-books').addEventListener('click', () => {
-    console.warn('Sale Books');
+    booksOnSale().then((booksArray) => showBooks(booksArray));
   });
-
+  // FAVORITE AUTHORS
+  document.querySelector('#fav-authors').addEventListener('click', () => {
+    getFavAuthors().then((authorsArray) => showAuthors(authorsArray));
+  });
   // ALL BOOKS
   document.querySelector('#all-books').addEventListener('click', () => {
-    console.warn('All Books');
+    getBooks().then((booksArray) => showBooks(booksArray));
   });
 
   // SEARCH
@@ -31,6 +38,10 @@ const navigationEvents = () => {
     }
   });
 
+  document.querySelector('#authors').addEventListener('click', () => {
+    getAuthors().then((authors) => showAuthors(authors));
+    document.querySelector('#form-container').innerHTML = '';
+  });
   // FIXME: STUDENTS Create an event listener for the Authors
   // 1. When a user clicks the authors link, make a call to firebase to get all authors
   // 2. Convert the response to an array because that is what the makeAuthors function is expecting
