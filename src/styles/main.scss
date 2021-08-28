@@ -34,6 +34,18 @@ body {
   color: white;
 }
 
+#modal-body {
+  background-color: rgba(199, 199, 199, 0.856);
+  border: 2px solid gray;
+  border-radius: 5px;
+  padding: 1em;
+}
+
+.modal-content {
+  background-color: transparent;
+  border: none;
+}
+
 #main-container {
   display: flex;
   flex-direction: column;
