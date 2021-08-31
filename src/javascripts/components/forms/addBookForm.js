@@ -1,13 +1,17 @@
 import selectAuthor from './selectAuthor';
+import clearDom from '../../helpers/data/clearDom';
 
 const addBookForm = (obj = {}) => {
-  document.querySelector('#store').innerHTML = '';
-  document.querySelector('#add-button').innerHTML = '';
+  clearDom();
   document.querySelector('#form-container').innerHTML = `
     <form id="submit-book-form" class="mb-4">
       <div class="form-group">
         <label for="title">Book Title</label>
         <input type="text" class="form-control" id="title" aria-describedby="bookTitle" placeholder="Enter Book Title" value="${obj.title || ''}" required>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" placeholder="Book Description" id="description" style="height: 100px">${obj.description || ''}</textarea>
       </div>
       <div class="form-group">
         <label for="image">Image URL</label>
