@@ -8,6 +8,9 @@ import {
   createAuthor, deleteAuthor, updateAuthor, getOneAuthor, favAuthor
 } from '../helpers/data/authorData';
 import { showAuthors } from '../components/authors';
+import viewBook from '../components/viewBook';
+import viewAuthor from '../components/viewAuthor';
+import viewBookDetails from '../helpers/data/mergedData';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -32,6 +35,7 @@ const domEvents = () => {
         title: document.querySelector('#title').value,
         image: document.querySelector('#image').value,
         price: document.querySelector('#price').value,
+        description: document.querySelector('#description').value,
         sale: document.querySelector('#sale').checked,
         author_id: document.querySelector('#author').value
       };
@@ -53,11 +57,19 @@ const domEvents = () => {
         title: document.querySelector('#title').value,
         image: document.querySelector('#image').value,
         price: document.querySelector('#price').value,
+        description: document.querySelector('#description').value,
         sale: document.querySelector('#sale').checked,
         author_id: document.querySelector('#author').value,
         firebaseKey
       };
       updateBook(bookObj).then(showBooks);
+    }
+
+    if (e.target.id.includes('view-book-btn')) {
+      e.preventDefault();
+      const getKey = e.target.id.split('--');
+      const [, firebaseKey] = getKey;
+      viewBookDetails(firebaseKey).then(viewBook);
     }
 
     // ADD CLICK EVENT FOR DELETING AN AUTHOR
@@ -80,6 +92,7 @@ const domEvents = () => {
         first_name: document.querySelector('#first_name').value,
         last_name: document.querySelector('#last_name').value,
         email: document.querySelector('#email').value,
+        image: document.querySelector('#image').value
       };
       createAuthor(authorObj).then((authorsArray) => showAuthors(authorsArray));
     }
@@ -90,6 +103,13 @@ const domEvents = () => {
       getOneAuthor(id).then((authObj) => addAuthorForm(authObj));
     }
 
+    if (e.target.id.includes('view-author-btn')) {
+      e.preventDefault();
+      const getKey = e.target.id.split('--');
+      const [, firebaseKey] = getKey;
+      getOneAuthor(firebaseKey).then(viewAuthor);
+    }
+
     // TOGGLE FAVROITE AUTHOR
     if (e.target.id.includes('fav-author')) {
       e.preventDefault();
@@ -97,7 +117,6 @@ const domEvents = () => {
       const [, firebaseKey] = getKey;
       let authorObj = {};
       getOneAuthor(firebaseKey).then((auth) => {
-        console.log(auth.favorite);
         if (auth.favorite === true) {
           authorObj = {
             favorite: false,
