@@ -22,4 +22,10 @@ const emptyAuthors = () => {
   document.querySelector('#store').innerHTML = '<h1>No Authors</h1>';
 };
 
-export { showAuthors, emptyAuthors };
+const renderAuthorBookList = (bookList) => {
+  let authorBookString = '';
+  bookList.forEach((bookTitle) => { authorBookString += `<li>${bookTitle}</li>`; });
+  document.getElementById('bookList').innerHTML = authorBookString;
+};
+
+export { showAuthors, emptyAuthors, renderAuthorBookList };

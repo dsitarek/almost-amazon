@@ -1,4 +1,6 @@
 import clearDom from '../helpers/data/clearDom';
+import { viewAuthorBooks } from '../helpers/data/mergedData';
+import { renderAuthorBookList } from './authors';
 
 const viewAuthor = (obj) => {
   clearDom();
@@ -13,12 +15,18 @@ const viewAuthor = (obj) => {
        </div>
      </div>
      <div class="text-white ms-5 details">
-       <h5>${obj.first_name} ${obj.author.first_name} ${obj.author.last_name}</h5>
+       <h5>${obj.first_name} ${obj.last_name}</h5>
        <p>${obj.description || ''}</p>
        <hr>
-       <p>${obj.email}</p>      
+       <p>Email: ${obj.email}</p> 
+       <div>
+       <h6>List of books by author:</h6>
+       <ul id="bookList"></ul>  
+       </div>
         </div>
       </div>`;
+
+  viewAuthorBooks(obj.firebaseKey).then(renderAuthorBookList);
 };
 
 export default viewAuthor;
