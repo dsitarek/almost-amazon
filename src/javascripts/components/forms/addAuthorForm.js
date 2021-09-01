@@ -13,6 +13,10 @@ const addAuthorForm = (obj = {}) => {
           <input type="url" class="form-control" id="last_name" placeholder="Author Last Name" value="${obj.last_name || ''}" required>
         </div>
         <div class="form-group">
+          <label for="quote">Author Quote</label>
+          <input type="url" class="form-control" id="quote" placeholder="Quote" value="${obj.quote || ''}" required>
+        </div>
+        <div class="form-group">
           <label for="email">Email</label>
           <input type="email" class="form-control" id="email" placeholder="Email" value="${obj.email || ''}" required>
         </div>
