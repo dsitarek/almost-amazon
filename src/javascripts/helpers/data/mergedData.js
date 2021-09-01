@@ -1,5 +1,7 @@
 import { getOneAuthor, deleteAuthor } from './authorData';
-import { getOneBook, authorBooks, deleteBook } from './bookData';
+import {
+  getOneBook, authorBooks, deleteBook, getBooks
+} from './bookData';
 
 const viewBookDetails = (firebaseKey) => (async () => {
   const book = await getOneBook(firebaseKey);
@@ -21,4 +23,13 @@ const deleteAuthorBooks = (authorId) => new Promise((resolve, reject) => {
   }).catch(reject);
 });
 
-export { viewBookDetails, viewAuthorBooks, deleteAuthorBooks };
+const searchBooks = async () => {
+  const searchTerm = document.querySelector('#search').value;
+  const bookArray = await getBooks();
+  const searchReturn = bookArray.filter((book) => (book.title).toLowerCase().includes(searchTerm));
+  return searchReturn;
+};
+
+export {
+  viewBookDetails, viewAuthorBooks, deleteAuthorBooks, searchBooks
+};
