@@ -61,6 +61,12 @@ const authorBooks = (authorId) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const getSearchedBooks = (search) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/books.json?orderBy="title "&equalTo="${search}"`)
+    .then((response) => resolve(Object.values(response.data)))
+    .catch((error) => reject(error));
+});
+
 export {
-  getBooks, createBook, deleteBook, getOneBook, booksOnSale, updateBook, authorBooks
+  getBooks, createBook, deleteBook, getOneBook, booksOnSale, updateBook, authorBooks, getSearchedBooks
 };

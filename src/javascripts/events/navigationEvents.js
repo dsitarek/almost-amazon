@@ -3,6 +3,7 @@ import { showAuthors } from '../components/authors';
 import { getAuthors, getFavAuthors } from '../helpers/data/authorData';
 import { showBooks } from '../components/books';
 import { getBooks, booksOnSale } from '../helpers/data/bookData';
+import { searchBooks } from '../helpers/data/mergedData';
 
 // navigation events
 const navigationEvents = () => {
@@ -30,11 +31,7 @@ const navigationEvents = () => {
 
     // WHEN THE USER PRESSES ENTER, MAKE THE API CALL AND CLEAR THE INPUT
     if (e.keyCode === 13) {
-      // MAKE A CALL TO THE API TO FILTER ON THE BOOKS
-      // IF THE SEARCH DOESN'T RETURN ANYTHING, SHOW THE EMPTY STORE
-      // OTHERWISE SHOW THE STORE
-
-      document.querySelector('#search').value = '';
+      searchBooks().then(showBooks);
     }
   });
 
