@@ -16,6 +16,7 @@ const viewAuthor = (obj) => {
      </div>
      <div class="text-white ms-5 details">
        <h5>${obj.first_name} ${obj.last_name}</h5>
+       <p class ="author-quote">${obj.quote || ''}</p>
        <p>${obj.description || ''}</p>
        <hr>
        <p>Email: ${obj.email}</p> 
