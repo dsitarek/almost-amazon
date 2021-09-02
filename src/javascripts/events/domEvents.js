@@ -95,7 +95,8 @@ const domEvents = () => {
         last_name: document.querySelector('#last_name').value,
         quote: document.querySelector('#quote').value,
         email: document.querySelector('#email').value,
-        image: document.querySelector('#image').value
+        image: document.querySelector('#image').value,
+        notes: document.querySelector('#notes').value
       };
       createAuthor(authorObj).then((authorsArray) => showAuthors(authorsArray));
     }
@@ -145,6 +146,7 @@ const domEvents = () => {
         last_name: document.querySelector('#last_name').value,
         quote: document.querySelector('#quote').value,
         email: document.querySelector('#email').value,
+        notes: document.querySelector('#notes').value,
         firebaseKey
       };
       updateAuthor(authorObj).then(showAuthors);
