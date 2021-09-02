@@ -11,6 +11,8 @@ import { showAuthors } from '../components/authors';
 import viewBook from '../components/viewBook';
 import viewAuthor from '../components/viewAuthor';
 import { viewBookDetails, deleteAuthorBooks } from '../helpers/data/mergedData';
+import addReviewForm from '../components/forms/reviewForm';
+import { createReview } from '../helpers/data/reviewData';
 
 const domEvents = () => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
@@ -146,6 +148,24 @@ const domEvents = () => {
         firebaseKey
       };
       updateAuthor(authorObj).then(showAuthors);
+    }
+
+    if (e.target.id.includes('review-book')) {
+      const [, id] = e.target.id.split('--');
+      getOneBook(id).then((bookObj) => addReviewForm(bookObj));
+    }
+
+    if (e.target.id.includes('review-submit')) {
+      e.preventDefault();
+      const getKey = e.target.id.split('--');
+      const [, firebaseKey] = getKey;
+      const reviewObj = {
+        title: document.querySelector('#reviewTitle').value,
+        review: document.querySelector('#reviewBody').value,
+        rating: document.querySelector('#rating').value,
+        book_id: firebaseKey,
+      };
+      createReview(reviewObj, firebaseKey).then(viewBook);
     }
   });
 };
