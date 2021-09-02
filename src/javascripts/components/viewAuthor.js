@@ -19,13 +19,15 @@ const viewAuthor = (obj) => {
        <p class ="author-quote">${obj.quote || ''}</p>
        <p>${obj.description || ''}</p>
        <hr>
-       <p>Email: ${obj.email}</p> 
+       <p>Email: ${obj.email}</p>
+       <h6>Notes:</h6>
+       <p>${obj.notes || ''}</p>
        <div>
-       <h6>List of books by author:</h6>
-       <ul id="bookList"></ul>  
+        <h6>List of books by author:</h6>
+        <ul id="bookList"></ul>  
        </div>
-        </div>
-      </div>`;
+      </div>
+    </div>`;
 
   viewAuthorBooks(obj.firebaseKey).then(renderAuthorBookList);
 };
