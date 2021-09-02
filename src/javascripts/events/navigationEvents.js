@@ -2,7 +2,7 @@ import signOut from '../helpers/auth/signOut';
 import { showAuthors } from '../components/authors';
 import { getAuthors, getFavAuthors } from '../helpers/data/authorData';
 import { showBooks } from '../components/books';
-import { getBooks, booksOnSale } from '../helpers/data/bookData';
+import { getBooks, booksOnSale, getCart } from '../helpers/data/bookData';
 import { searchBooks } from '../helpers/data/mergedData';
 
 // navigation events
@@ -23,7 +23,10 @@ const navigationEvents = () => {
   document.querySelector('#all-books').addEventListener('click', () => {
     getBooks().then((booksArray) => showBooks(booksArray));
   });
-
+  // CART
+  document.querySelector('#cart-button').addEventListener('click', () => {
+    getCart().then((cartItems) => showBooks(cartItems));
+  });
   // SEARCH
   document.querySelector('#search').addEventListener('keyup', (e) => {
     const searchValue = document.querySelector('#search').value.toLowerCase();
@@ -31,7 +34,7 @@ const navigationEvents = () => {
 
     // WHEN THE USER PRESSES ENTER, MAKE THE API CALL AND CLEAR THE INPUT
     if (e.keyCode === 13) {
-      searchBooks().then(showBooks);
+      searchBooks(searchValue).then(showBooks);
     }
   });
 

@@ -1,5 +1,6 @@
 import { showBooks } from '../components/books';
 import logoutButton from '../components/buttons/logoutButton';
+import cartButton from '../components/buttons/cartButton';
 import domBuilder from '../components/domBuilder';
 import navBar from '../components/navBar';
 import domEvents from '../events/domEvents';
@@ -11,6 +12,7 @@ const startApp = () => {
   domEvents(); // ADD THE EVENT LISTENTERS TO THE DOM
   navBar(); // DYNAMICALLY ADD THE NAV
   logoutButton(); // ADD THE LOGOUT BUTTON COMPONENT
+  cartButton();
   navigationEvents(); // ATTACH THE EVENT LISTENERS TO THE NAVBAR
   // Put all books on the DOM
   getBooks().then((books) => showBooks(books));

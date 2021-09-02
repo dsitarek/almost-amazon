@@ -138,6 +138,27 @@ const domEvents = () => {
       });
     }
 
+    if (e.target.id.includes('add-cart-book')) {
+      e.preventDefault();
+      const getKey = e.target.id.split('--');
+      const [, firebaseKey] = getKey;
+      let bookObj = {};
+      getOneBook(firebaseKey).then((book) => {
+        if (book.inCart === true) {
+          bookObj = {
+            inCart: false,
+            firebaseKey
+          };
+        } if (book.inCart === false || book.inCart === undefined) {
+          bookObj = {
+            inCart: true,
+            firebaseKey
+          };
+        }
+        updateBook(bookObj).then(showBooks);
+      });
+    }
+
     // UPDATE AUTHOR
     if (e.target.id.includes('update-author')) {
       e.preventDefault();
