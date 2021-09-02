@@ -37,6 +37,7 @@ const domEvents = () => {
         title: document.querySelector('#title').value,
         image: document.querySelector('#image').value,
         price: document.querySelector('#price').value,
+        notes: document.querySelector('#notes').value,
         description: document.querySelector('#description').value,
         sale: document.querySelector('#sale').checked,
         author_id: document.querySelector('#author').value
@@ -60,6 +61,7 @@ const domEvents = () => {
         image: document.querySelector('#image').value,
         price: document.querySelector('#price').value,
         description: document.querySelector('#description').value,
+        notes: document.querySelector('#notes').value,
         sale: document.querySelector('#sale').checked,
         author_id: document.querySelector('#author').value,
         firebaseKey
