@@ -23,8 +23,7 @@ const deleteAuthorBooks = (authorId) => new Promise((resolve, reject) => {
   }).catch(reject);
 });
 
-const searchBooks = async () => {
-  const searchTerm = document.querySelector('#search').value;
+const searchBooks = async (searchTerm) => {
   const bookArray = await getBooks();
   const searchReturn = bookArray.filter((book) => (book.title).toLowerCase().includes(searchTerm));
   return searchReturn;

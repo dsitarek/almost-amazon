@@ -67,6 +67,12 @@ const getSearchedBooks = (search) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const getCart = () => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/books.json?orderBy="inCart"&equalTo=true`)
+    .then((response) => resolve(Object.values(response.data)))
+    .catch((error) => reject(error));
+});
+
 export {
-  getBooks, createBook, deleteBook, getOneBook, booksOnSale, updateBook, authorBooks, getSearchedBooks
+  getBooks, createBook, deleteBook, getOneBook, booksOnSale, updateBook, authorBooks, getSearchedBooks, getCart
 };
