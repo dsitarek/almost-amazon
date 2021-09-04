@@ -1,7 +1,7 @@
 import selectAuthor from './selectAuthor';
 import clearDom from '../../helpers/data/clearDom';
 
-const addBookForm = (obj = {}) => {
+const addBookForm = (uid, obj = {}) => {
   clearDom();
   document.querySelector('#form-container').innerHTML = `
     <form id="submit-book-form" class="mb-4">
@@ -22,7 +22,7 @@ const addBookForm = (obj = {}) => {
         <input type="text" class="form-control" id="price" placeholder="Book Price" value="${obj.price || ''}" required>
       </div>
       <div class="form-group">
-        <label for="notes">Price</label>
+        <label for="notes">Notes</label>
         <input type="text" class="form-control" id="notes" placeholder="Notes" value="${obj.notes || ''}" required>
       </div>
       <div class="form-group" id="select-author">
@@ -31,10 +31,10 @@ const addBookForm = (obj = {}) => {
         <input type="checkbox" class="form-check-input" id="sale" ${obj.sale ? 'checked' : ''}>
         <label class="form-check-label" for="sale">On Sale?</label>
       </div>
-      <button type="submit" <button type="submit"  id="${obj.firebaseKey ? `update-book--${obj.firebaseKey}` : 'submit-book'}" class="btn btn-primary">${obj.firebaseKey ? 'Update' : 'Submit Book'}</button>
+      <button type="submit" <button type="submit"  id="${obj.firebaseKey ? `update-book-btn--${obj.firebaseKey}` : 'submit-book-btn'}" class="btn btn-primary">${obj.firebaseKey ? 'Update' : 'Submit Book'}</button>
     </form>`;
 
-  selectAuthor(`${obj.author_id || ''}`);
+  selectAuthor(`${obj.author_id || ''}`, `${uid || ''}`);
 };
 
 export default addBookForm;

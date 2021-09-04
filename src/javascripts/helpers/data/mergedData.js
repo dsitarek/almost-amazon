@@ -15,16 +15,16 @@ const viewAuthorBooks = (firebaseKey) => (async () => {
   return authorBookList;
 })().catch(console.warn);
 
-const deleteAuthorBooks = (authorId) => new Promise((resolve, reject) => {
+const deleteAuthorBooks = (authorId, uid) => new Promise((resolve, reject) => {
   authorBooks(authorId).then((authorBookArray) => {
-    const deleteBooks = authorBookArray.map((book) => deleteBook(book.firebaseKey));
+    const deleteBooks = authorBookArray.map((book) => deleteBook(book.firebaseKey, uid));
 
-    Promise.all([...deleteBooks]).then(() => resolve(deleteAuthor(authorId)));
+    Promise.all([...deleteBooks]).then(() => resolve(deleteAuthor(authorId, uid)));
   }).catch(reject);
 });
 
-const searchBooks = async (searchTerm) => {
-  const bookArray = await getBooks();
+const searchBooks = async (searchTerm, uid) => {
+  const bookArray = await getBooks(uid);
   const searchReturn = bookArray.filter((book) => (book.title).toLowerCase().includes(searchTerm));
   return searchReturn;
 };

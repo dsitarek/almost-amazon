@@ -5,16 +5,16 @@ import { showAuthors } from '../../components/authors';
 // API CALLS FOR AUTHORS
 const dbUrl = firebaseConfig.databaseURL;
 // GET AUTHORS
-const getAuthors = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/authors.json`)
+const getAuthors = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/authors.json?orderBy="uid"&equalTo="${userId}"`)
     .then((response) => resolve(Object.values(response.data)))
     .catch((error) => reject(error));
 });
 // DELETE AUTHOR
-const deleteAuthor = (authorId) => new Promise((resolve, reject) => {
+const deleteAuthor = (authorId, uid) => new Promise((resolve, reject) => {
   axios.delete(`${dbUrl}/authors/${authorId}.json`)
     .then(() => {
-      getAuthors().then(resolve);
+      getAuthors(uid).then(resolve);
     }).catch((error) => reject(error));
 });
 // CREATE AUTHOR
@@ -40,21 +40,24 @@ const getOneAuthor = (key) => new Promise((resolve, reject) => {
 // UPDATE AUTHOR
 const updateAuthor = (updateObj) => new Promise((resolve, reject) => {
   axios.patch(`${dbUrl}/authors/${updateObj.firebaseKey}.json`, updateObj)
-    .then(() => getAuthors().then(resolve))
+    .then(() => getAuthors(updateObj.uid).then(resolve))
     .catch(reject);
 });
 // SEARCH AUTHORS
 // FILTER FAVORITE AUTHORS
-const getFavAuthors = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/authors.json?orderBy="favorite"&equalTo=true`)
-    .then((response) => resolve(Object.values(response.data)))
-    .catch((error) => reject(error));
+const getFavAuthors = (uid) => new Promise((resolve, reject) => {
+  getAuthors(uid)
+    .then((authors) => {
+      const favAuthors = authors.filter((author) => author.favorite);
+      resolve(favAuthors);
+    })
+    .catch(reject);
 });
 
 // UPDATE FAVROITE AUTHOR
 const favAuthor = (updateObj) => new Promise((resolve, reject) => {
   axios.patch(`${dbUrl}/authors/${updateObj.firebaseKey}.json`, updateObj)
-    .then(() => getFavAuthors().then(resolve))
+    .then(() => getFavAuthors(updateObj.uid).then(resolve))
     .catch(reject);
 });
 

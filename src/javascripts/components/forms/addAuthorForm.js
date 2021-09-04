@@ -28,7 +28,7 @@ const addAuthorForm = (obj = {}) => {
           <label for="image">Image URL</label>
           <input type="url" class="form-control" id="image" placeholder="Image URL" value="${obj.image || ''}" required>
         </div>
-        <button type="submit" id="${obj.firebaseKey ? `update-author--${obj.firebaseKey}` : 'submit-author'}" class="btn btn-primary">${obj.firebaseKey ? 'Update' : 'Submit Author'}</button>
+        <button type="submit" id="${obj.firebaseKey ? `update-author-btn--${obj.firebaseKey}` : 'submit-author-btn'}" class="btn btn-primary">${obj.firebaseKey ? 'Update' : 'Submit Author'}</button>
       </form>`;
 };
 

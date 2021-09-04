@@ -5,17 +5,17 @@ import firebaseConfig from '../../../api/apiKeys';
 const dbUrl = firebaseConfig.databaseURL;
 
 // GET BOOKS
-const getBooks = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/books.json`)
+const getBooks = (userId) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/books.json?orderBy="uid"&equalTo="${userId}"`)
     .then((response) => resolve(Object.values(response.data)))
     .catch((error) => reject(error));
 });
 
 // DELETE BOOK
-const deleteBook = (bookId) => new Promise((resolve, reject) => {
+const deleteBook = (bookId, uid) => new Promise((resolve, reject) => {
   axios.delete(`${dbUrl}/books/${bookId}.json`)
     .then(() => {
-      getBooks().then(resolve);
+      getBooks(uid).then(resolve);
     }).catch((error) => reject(error));
 });
 
@@ -26,7 +26,7 @@ const createBook = (bookObj) => new Promise((resolve, reject) => {
       const body = { firebaseKey: response.data.name };
       axios.patch(`${dbUrl}/books/${response.data.name}.json`, body)
         .then(() => {
-          getBooks().then((booksArray) => resolve(booksArray));
+          getBooks(bookObj.uid).then((booksArray) => resolve(booksArray));
         });
     }).catch((error) => reject(error));
 });
@@ -43,16 +43,19 @@ const getOneBook = (key) => new Promise((resolve, reject) => {
 // UPDATE BOOK
 const updateBook = (updateObj) => new Promise((resolve, reject) => {
   axios.patch(`${dbUrl}/books/${updateObj.firebaseKey}.json`, updateObj)
-    .then(() => getBooks().then(resolve))
+    .then(() => getBooks(updateObj.uid).then(resolve))
     .catch(reject);
 });
 
 // SEARCH BOOKS
 // FILTER ON SALE
-const booksOnSale = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/books.json?orderBy="sale"&equalTo=true`)
-    .then((response) => resolve(Object.values(response.data)))
-    .catch((error) => reject(error));
+const booksOnSale = (uid) => new Promise((resolve, reject) => {
+  getBooks(uid)
+    .then((userBooks) => {
+      const onSaleBooks = userBooks.filter((book) => book.sale);
+      resolve(onSaleBooks);
+    })
+    .catch(reject);
 });
 
 const authorBooks = (authorId) => new Promise((resolve, reject) => {
@@ -62,7 +65,7 @@ const authorBooks = (authorId) => new Promise((resolve, reject) => {
 });
 
 const getSearchedBooks = (search) => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/books.json?orderBy="title "&equalTo="${search}"`)
+  axios.get(`${dbUrl}/books.json?orderBy="title"&equalTo="${search}"`)
     .then((response) => resolve(Object.values(response.data)))
     .catch((error) => reject(error));
 });
