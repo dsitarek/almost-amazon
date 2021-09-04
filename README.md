@@ -1,80 +1,107 @@
-# Almost Amazon
-We are building an admin app that allows a store owner to login to the app and manage books and authors.
+# Webpack Intro
 
-[Deployed Sample](https://almost-amazon-sample.netlify.app/) (PLEASE DO NOT DELETE my books ;-))
+[See Live Demo of this Template](https://webpack-5-template.netlify.app)
 
-![Screen Shot](./almostam.png)
+Webpack is a task runner and a module bundler. It originally started as a module bundler. This means that it takes all of your separate Javascript modules and bundles them together into a single file. Webpack also automates some of the tasks that we have to run every time we change the code. It will automate these tasks so that we are not typing in the same commands every single time.
 
-We will be learning about the following:
-- XHR requests
-- Promises
-- Firebase
-- ERDs
-- Postman
-- CRUD
+## Topics
+- [Get Started](#get-started)
+- [Starting the Project](#starting-the-project)
+- [Other important tidbits](#other-important-tidbits)
+    - [Console messages](#console-messages)
+    - [Including images with webpack](#including-images-with-webpack)
+    - [Importing CSS](#importing-cssscss)
+    - [Using axios](#using-axios)
+    - [Deploying on Netlify](#deploying-on-netlify)
+___
 
 ## Get Started
-- Clone your repo
-- Install app dependencies: `npm i`
-- Start your server: `npm start`
-  - The server starts the only error you should see is this one (which will be fixed after the Firebase Walkthrough is completed):
-    ```js
-    {
-      code: "auth/invalid-api-key",
-      message: "Your API key is invalid, please check you have copied it correctly.",
-      a: null
-    }
-    ```
-- Change `.sample.env` file name to `.env`
 
+### Use Template
+#### 1. To get started, click the GREEN "Use this Template" button at the top of the repo
+![Use this Template](./documentation/usetemplate.png)
 
-## TODO 1 - Get Setup
-In preparation for next week, complete the following in lab:
-- [Firebase Walkthrough Videos ~15 minutes](https://vimeo.com/showcase/codetracker-firebase) PW: `firebaseRules!`
-  - Create a project called `Almost Amazon`
-  - Add a Realtime Database
-  - Create an app called `Almost Amazon`
-  - Add Auth
-  - Add the Keys to your `.env` file
-  - Upload the sample data to Firebase
-- Test the Firebase Setup
-  - Start and stop your server
-  - Go to the application it should look like this:
- 
-  <img src="documentation/Login Screen.png" alt="Login Screen" width="300px"/>
- 
-  - The API key error should also be gone
-  - Clicking the button should open up a Google Popup. Select a user to sign in with.
+#### 2. Make sure YOUR github account is selected in the dropdown and name your project
+![Create Project](./documentation/createproject.png)
 
-  <img src="documentation/Google Pop-Up.png" alt="Google Pop-Up Screen" width="300px"/>
-    
-  - After signing in, there should be a Navbar
-    - If your screen size is small, the Navbar might be collapsed like in the image below. Click on the hamburger button to open it.
- 
-  <img src="documentation/Logged In Screen.png" alt="Logged In Screen" width="300px"/>
-  
-  - Click on the Log Out Button
+3. Clone your new repo to your local machine
+4. Go to the **NEXT** section
 
- 
-  <img src="documentation/Logout Button.png" alt="Logout Button Screen" width="300px"/>    
-  
-  - This should bring back the Login Button
+## Starting the Project
+1. Open the `package.json` file and change the `name` property to the name of your application, and `author` to  your name.
+1. Rename the `.sample.env` file to `.env` file. The final file name should be `.env`
+1. From your command line, be in the root directory and run `npm install` OR `npm i` for short.
+1. To start your application, run `npm start`
 
-## TODO 2 - Look at the Code...
-  - Take a look at the layout of the application. Start in `main.js` and follow the flow to get up to speed.
-    - Look at the components, events, helpers, and views
-    - Checkout `main.scss` 
+### If you see this, you are set to go!
+![LIT](./documentation/lit-screen.png)
 
-## TODO 3 - Installs
-- Install [Postman](https://www.postman.com/downloads/)
+**NOTES:** 
+- Changes you make to the project will make the browser reload on save...no more hard refresh unless something goes wrong.
+- You will no longer be using the `hs -o` command. To start your server, you will run `npm start`
 
+## Other Important Tidbits
+### Console messages
+From this time forward, you will be expected to have a clean console in order for your assignments to be approved. This means that the use of `console.log` is acceptable **_(debugger is WAY better though)_** while developing, but will throw an error in your console like the image below, but all `logs` will have to be removed. You may use `console.error` and `console.warn` in your code however for messages. These need to all be removed before pushing to production unless they contain vital info for the user/developer.
 
+![not acceptable](./documentation/notacceptable.png)
 
-## Technologies used
-- Javascript
-- Firebase Auth
-- Firebase Realtime Database
-- Axios for XHR requests
-- SASS (For your own exploration)
-- Bootstrap
-- Webpack
+### Including Images with Webpack
+If you have a folder of local images that you want to load into your code things get a little strange with webpack.  Remember the only way webpack knows about assets is if they are imported into your javascript files.  Even our CSS is not added until those files are imported into our javascript files.  Below is some sample code for how to load a local image file into your project
+
+```js
+import cat from './assets/cat.jpg';
+
+let domString = `<img src=${cat} alt="picture of a cat"/>`;
+
+document.getElementById('cat').innerHTMl = domString;
+```
+
+### Importing CSS/SCSS
+**NOTE:** We will be using SCSS files. They are used the same way your CSS files work, with some added benefits that we will discuss later.
+
+Since Webpack is making the connection to the JS and CSS for us and we are no longer manually adding links or script tags to our HTML, we have to get our styles to the application some way...
+
+Here is how we add our styles using webpack:
+
+```js
+import '../styles/main.scss';
+
+const init = () => {
+  document.querySelector('#app').innerHTML = '<h1>HELLO! You are up and running!</h1>');
+  console.log('YOU ARE UP AND RUNNING!');
+};
+
+init();
+```
+
+### Using Axios
+> For every file you will need to make an XHR request in, you will need to require Axios
+```js
+import axios from 'axios';
+
+const examplePromise = () => {
+  axios.get('http://localhost:3001/example')
+    .then((data) => {
+      console.warn(data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+});
+```
+
+### Deploying on Netlify
+
+- Build Command: `npm run build`
+- Publish directory: `dist`
+- Add Environmental Variables (NOT REQUIRED for Apps that do not use API Keys, etc)
+    - Any Enviromental variables you are using in your `.env` file should be added to Netlify. 
+        - Go to Site settings > Build & deploy > Environment > Environment variables and the keys and values there.
+
+- Update Firebase URL Settings
+    - In Firebase under Authentication select sign in methods, scroll to Authorized domains. Add your Netlify URL.
+        
+## More Info and Resources on Webpack
+- Visit the [Webpack documentation](https://webpack.js.org/concepts/) if you want to explore more.
+- [Info on our Webpack Config](https://github.com/nss-nightclass-projects/Night-Class-Resources/blob/master/book-2-patterns-and-tools/chapters/webpack-configure.md)

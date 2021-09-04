@@ -1,4 +1,6 @@
 import clearDom from '../helpers/data/clearDom';
+import buy from '../../styles/img/buy.png';
+import returnimg from '../../styles/img/return.png';
 
 const showBooks = (array) => {
   clearDom();
@@ -14,7 +16,7 @@ const showBooks = (array) => {
         <i class="btn btn-success fas fa-eye" id="view-book-btn--${item.firebaseKey}"></i>
             <i id="edit-book-btn--${item.firebaseKey}" class="fas fa-edit btn btn-info"></i>
             <i id="delete-book--${item.firebaseKey}" class="btn btn-danger fas fa-trash-alt"></i>
-            <i id="add-cart-book--${item.firebaseKey}" class="btn btn-success fas">${item.inCart ? '<img src="src/styles/img/return.png">' : '<img src="src/styles/img/buy.png">'}</i>
+            <i id="add-cart-book--${item.firebaseKey}" class="btn btn-success fas">${item.inCart ? `<img src=${returnimg}>` : `<img src=${buy}>`}</i>
         </div>
       </div>`;
   });

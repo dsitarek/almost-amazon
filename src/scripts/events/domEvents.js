@@ -18,6 +18,7 @@ const domEvents = (user) => {
   document.querySelector('#main-container').addEventListener('click', (e) => {
     // CLICK EVENT FOR DELETING A BOOK
     if (e.target.id.includes('delete-book')) {
+      // eslint-disable-next-line no-alert
       if (window.confirm('Want to delete?')) {
         const getKey = e.target.id.split('--');
         const [, b] = getKey;
@@ -83,6 +84,7 @@ const domEvents = (user) => {
 
     // ADD CLICK EVENT FOR DELETING AN AUTHOR
     if (e.target.id.includes('delete-author')) {
+      // eslint-disable-next-line no-alert
       if (window.confirm('Want to delete?')) {
         const getKey = e.target.id.split('--');
         const [, b] = getKey;
@@ -154,13 +156,13 @@ const domEvents = (user) => {
       const [, firebaseKey] = getKey;
       let bookObj = {};
       getOneBook(firebaseKey).then((book) => {
-        if (book.inCart === true) {
+        if (book.inCart) {
           bookObj = {
             inCart: false,
             firebaseKey,
             uid: user.uid
           };
-        } if (book.inCart === false || book.inCart === undefined) {
+        } else {
           bookObj = {
             inCart: true,
             firebaseKey,
