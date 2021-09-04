@@ -5,8 +5,9 @@ const addBookForm = (uid, obj = {}) => {
   clearDom();
   document.querySelector('#form-container').innerHTML = `
     <form id="submit-book-form" class="mb-4">
+    <h6 id="requiredError"></h6>
       <div class="form-group">
-        <label for="title">Book Title</label>
+        <label for="title">Book Title <span class="required-text">*</span></label>
         <input type="text" class="form-control" id="title" aria-describedby="bookTitle" placeholder="Enter Book Title" value="${obj.title || ''}" required>
       </div>
       <div class="form-group">
@@ -14,11 +15,11 @@ const addBookForm = (uid, obj = {}) => {
         <textarea class="form-control" placeholder="Book Description" id="description" style="height: 100px">${obj.description || ''}</textarea>
       </div>
       <div class="form-group">
-        <label for="image">Image URL</label>
+        <label for="image">Image URL <span class="required-text">*</span></label>
         <input type="url" class="form-control" id="image" placeholder="Image URL" value="${obj.image || ''}" required>
       </div>
       <div class="form-group">
-        <label for="price">Price</label>
+        <label for="price">Price <span class="required-text">*</span></label>
         <input type="text" class="form-control" id="price" placeholder="Book Price" value="${obj.price || ''}" required>
       </div>
       <div class="form-group">

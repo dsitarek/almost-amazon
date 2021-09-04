@@ -5,6 +5,7 @@ const addReviewForm = (obj = {}) => {
   document.querySelector('#form-container').innerHTML = `
         <form id="submit-book-form" class="mb-4">
           <h3>Book Review for ${obj.title}</h3>
+          <h6 id="requiredError"></h6>
           <div class="form-group">
             <label for="reviewTitle">Review Title</label>
             <input type="text" class="form-control" id="reviewTitle" placeholder="Review Title">
