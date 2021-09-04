@@ -30,12 +30,45 @@ const domEvents = (user) => {
       addBookForm(user.uid);
     }
 
+    // CLICK EVENT FOR SUBMITTING FORM FOR ADDING A BOOK
+    if (e.target.id.includes('submit-book-btn')) {
+      e.preventDefault();
+      const bookObj = {
+        title: document.querySelector('#title').value,
+        image: document.querySelector('#image').value,
+        price: document.querySelector('#price').value,
+        notes: document.querySelector('#notes').value,
+        description: document.querySelector('#description').value,
+        sale: document.querySelector('#sale').checked,
+        author_id: document.querySelector('#author').value,
+        uid: user.uid,
+      };
+      createBook(bookObj).then((booksArray) => showBooks(booksArray));
+    }
+
     // CLICK EVENT FOR SHOWING MODAL FORM FOR ADDING A BOOK
     if (e.target.id.includes('edit-book-btn')) {
       const [, id] = e.target.id.split('--');
       getOneBook(id).then((bookObj) => addBookForm(user.uid, bookObj));
     }
     // CLICK EVENT FOR EDITING A BOOK
+    if (e.target.id.includes('update-book-btn')) {
+      e.preventDefault();
+      const getKey = e.target.id.split('--');
+      const [, firebaseKey] = getKey;
+      const bookObj = {
+        title: document.querySelector('#title').value,
+        image: document.querySelector('#image').value,
+        price: document.querySelector('#price').value,
+        description: document.querySelector('#description').value,
+        notes: document.querySelector('#notes').value,
+        sale: document.querySelector('#sale').checked,
+        author_id: document.querySelector('#author').value,
+        uid: user.uid,
+        firebaseKey
+      };
+      updateBook(bookObj).then(showBooks);
+    }
 
     if (e.target.id.includes('view-book-btn')) {
       e.preventDefault();
@@ -56,6 +89,20 @@ const domEvents = (user) => {
     if (e.target.id.includes('add-author-btn')) {
       console.warn('CLICKED ADD AUTHOR BUTTON', e.target.id);
       addAuthorForm();
+    }
+    // ADD CLICK EVENT FOR SUBMITTING FORM FOR ADDING AN AUTHOR
+    if (e.target.id.includes('submit-author-btn')) {
+      e.preventDefault();
+      const authorObj = {
+        first_name: document.querySelector('#first_name').value,
+        last_name: document.querySelector('#last_name').value,
+        quote: document.querySelector('#quote').value,
+        email: document.querySelector('#email').value,
+        image: document.querySelector('#image').value,
+        notes: document.querySelector('#notes').value,
+        uid: user.uid,
+      };
+      createAuthor(authorObj).then((authorsArray) => showAuthors(authorsArray));
     }
 
     // ADD CLICK EVENT FOR EDITING AN AUTHOR
@@ -118,64 +165,6 @@ const domEvents = (user) => {
       });
     }
 
-    if (e.target.id.includes('review-book')) {
-      const [, id] = e.target.id.split('--');
-      getOneBook(id).then((bookObj) => addReviewForm(bookObj));
-    }
-  });
-};
-
-const domEventsSubmit = (user) => {
-  document.querySelector('#main-container').addEventListener('submit', (e) => {
-    // CLICK EVENT FOR SUBMITTING FORM FOR ADDING A BOOK
-    if (e.target.id.includes('submit-book-btn')) {
-      e.preventDefault();
-      const bookObj = {
-        title: document.querySelector('#title').value,
-        image: document.querySelector('#image').value,
-        price: document.querySelector('#price').value,
-        notes: document.querySelector('#notes').value,
-        description: document.querySelector('#description').value,
-        sale: document.querySelector('#sale').checked,
-        author_id: document.querySelector('#author').value,
-        uid: user.uid,
-      };
-      createBook(bookObj).then((booksArray) => showBooks(booksArray));
-    }
-
-    if (e.target.id.includes('update-book-btn')) {
-      e.preventDefault();
-      const getKey = e.target.id.split('--');
-      const [, firebaseKey] = getKey;
-      const bookObj = {
-        title: document.querySelector('#title').value,
-        image: document.querySelector('#image').value,
-        price: document.querySelector('#price').value,
-        description: document.querySelector('#description').value,
-        notes: document.querySelector('#notes').value,
-        sale: document.querySelector('#sale').checked,
-        author_id: document.querySelector('#author').value,
-        uid: user.uid,
-        firebaseKey
-      };
-      updateBook(bookObj).then(showBooks);
-    }
-
-    // ADD CLICK EVENT FOR SUBMITTING FORM FOR ADDING AN AUTHOR
-    if (e.target.id.includes('submit-author-btn')) {
-      e.preventDefault();
-      const authorObj = {
-        first_name: document.querySelector('#first_name').value,
-        last_name: document.querySelector('#last_name').value,
-        quote: document.querySelector('#quote').value,
-        email: document.querySelector('#email').value,
-        image: document.querySelector('#image').value,
-        notes: document.querySelector('#notes').value,
-        uid: user.uid,
-      };
-      createAuthor(authorObj).then((authorsArray) => showAuthors(authorsArray));
-    }
-
     // UPDATE AUTHOR
     if (e.target.id.includes('update-author-btn')) {
       e.preventDefault();
@@ -191,6 +180,11 @@ const domEventsSubmit = (user) => {
         uid: user.uid,
       };
       updateAuthor(authorObj).then(showAuthors);
+    }
+
+    if (e.target.id.includes('review-book')) {
+      const [, id] = e.target.id.split('--');
+      getOneBook(id).then((bookObj) => addReviewForm(bookObj));
     }
 
     if (e.target.id.includes('review-submit')) {
@@ -209,4 +203,4 @@ const domEventsSubmit = (user) => {
   });
 };
 
-export { domEvents, domEventsSubmit };
+export default domEvents;
