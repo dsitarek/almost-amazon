@@ -118,3 +118,12 @@ body {
   margin: .5em;
   min-width: 12em;
 }
+
+.required-text {
+  color: rgb(255, 0, 0);
+}
+
+#requiredError {
+  color:red;
+  font-style: italic;
+}
