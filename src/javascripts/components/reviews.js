@@ -8,6 +8,7 @@ const showreviews = (arrayOfReviews) => {
       <h4>${obj.rating}</h4>
       <h5 class="card-title">${obj.title}</h5>
       <p class="card-text">${obj.review}</p>
+      <h6>Review By: ${obj.displayName}</h6>
     </div>
   </div>`;
   });
