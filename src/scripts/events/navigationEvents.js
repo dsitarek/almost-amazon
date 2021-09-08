@@ -25,7 +25,7 @@ const navigationEvents = (uid) => {
   });
   // CART
   document.querySelector('#cart-button').addEventListener('click', () => {
-    getCart().then((cartItems) => showBooks(cartItems));
+    getCart(uid).then((cartItems) => showBooks(cartItems));
   });
   // SEARCH
   document.querySelector('#search').addEventListener('keyup', (e) => {
