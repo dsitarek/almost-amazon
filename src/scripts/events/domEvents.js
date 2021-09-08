@@ -156,13 +156,13 @@ const domEvents = (user) => {
       const [, firebaseKey] = getKey;
       let bookObj = {};
       getOneBook(firebaseKey).then((book) => {
-        if (book.inCart) {
+        if (book.inCart === true) {
           bookObj = {
             inCart: false,
             firebaseKey,
             uid: user.uid
           };
-        } else {
+        } if (book.inCart === false || book.inCart === undefined) {
           bookObj = {
             inCart: true,
             firebaseKey,

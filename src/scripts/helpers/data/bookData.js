@@ -70,9 +70,12 @@ const getSearchedBooks = (search) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const getCart = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/books.json?orderBy="inCart"&equalTo=true`)
-    .then((response) => resolve(Object.values(response.data)))
+const getCart = (uid) => new Promise((resolve, reject) => {
+  getBooks(uid)
+    .then((userBooks) => {
+      const onSaleBooks = userBooks.filter((book) => book.inCart);
+      resolve(onSaleBooks);
+    })
     .catch((error) => reject(error));
 });
 
